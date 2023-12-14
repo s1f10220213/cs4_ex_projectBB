@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>プロジェクト指定</title>
+</head>
+<body>
+    <p>入りたいプロジェクト名を入力してください</p>
+    <br>
+    <input id="project-name-input" type="text" size="100"><br>
+    <input id="project-name-submit" type="button" value="Enter">
+
+    <script>
+        document.querySelector('#project-name-input').focus();
+        document.querySelector('#project-name-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#project-name-submit').click();
+            }
+        };
+
+        document.querySelector('#project-name-submit').onclick = function(e) {
+            var projectName = document.querySelector('#project-name-input').value;
+            window.location.pathname = '/project/' + projectName;
+        };
+    </script>
+</body>
+</html>

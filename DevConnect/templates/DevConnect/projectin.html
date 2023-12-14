@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>プロジェクト部屋</title>
+</head>
+<body>
+    <textarea id="project-log" cols="100" rows="20"></textarea><br>
+    <input id="project-message-input" type="text" size="100"><br>
+    <input id="project-message-submit" type="button" value="Send">
+    {{ project_name|json_script:"project-name" }}
+    <script>
+        const projectName = JSON.parse(document.getElementById('project-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/project/'
+            + projectName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#project-log').value += (data.message + '\n');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#project-message-input').focus();
+        document.querySelector('#project-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#project-message-submit').click();
+            }
+        };
+
+        document.querySelector('#project-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#project-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+</body>
+</html>
