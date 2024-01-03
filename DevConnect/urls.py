@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     # path('', views.mypage, name='mypage'),
     # path('', views.top, name='my_page'),
-    path('project', views.project, name='project'),
-    path('project/<str:project_name>', views.projectin, name='projectin'),
+    path('project/cp', views.cp, name='cp'), # CreateProject新規プロジェクト作成
+    path('project', views.project, name='project'), # プロジェクトルーム選択
+    path('project/<str:project_name>', views.projectin, name='projectin'), # プロジェクトルーム
 ]

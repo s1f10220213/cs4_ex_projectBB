@@ -1,5 +1,8 @@
 from django.shortcuts import render
 
+def cp(request):
+    return render(request, "DevConnect/create_project.html")
+
 def project(request):
     return render(request, "DevConnect/project.html")
 
