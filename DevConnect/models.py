@@ -25,7 +25,11 @@ class Project_detail(models.Model):
     explain = models.TextField()
     leader = models.ForeignKey(User, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
 
-class Project_genre(models.Model):
+class Project_recruit_genre(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    genre = models.CharField(max_length=100)
+
+class Project_member_genre(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     genre = models.CharField(max_length=100)
 
