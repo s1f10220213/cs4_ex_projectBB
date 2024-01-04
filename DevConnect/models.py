@@ -11,6 +11,9 @@ class User_Genre(models.Model):
     genre = models.CharField(max_length=100)
 
 ### Project #####################################################
+    
+class Project(models.Model):
+    user = models.ManyToManyField(User, through='ProjectMembers')
 
 class ProjectMembers(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
