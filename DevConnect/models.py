@@ -1,41 +1,33 @@
 from django.db import models
 
 # Create your models here.
+class User(models.Model):
+    user_id = models.CharField(max_length=25, unique=True)
+    user_name = models.TextField()
+    user_password = models.CharField(max_length=25)
 
+class User_Genre(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    genre = models.CharField(max_length=100)
 
-# class User(models.Model):
-#     user_id = models.CharField(max_length=225, unique=True)
-#     user_name = models.TextField()
-#     user_password = models.ForeignKey(Listinfo, on_delete=models.CASCADE, related_name="list_info", null=True)
+### Project #####################################################
 
-#     def __str__(self):
-#         return self.user_name
+class ProjectMembers(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
+class Project_detail(models.Model):
+    project = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
+    name = models.CharField(max_length=100)
+    explain = models.TextField()
+    leader = models.ForeignKey(User, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
 
-# class Project_member(models.Model):
-#     project_id = models.ForeignKey(Project_detail, on_delete=models.CASCADE, related_name="id", null=True) #　プロジェクトのデータベースにアクセス
-#     userList_id = models.ForeignKey(, on_delete=models.CASCADE, related_name="", null=True) #　参加メンバーのデータベースにアクセス
+class Project_genre(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    genre = models.CharField(max_length=100)
 
-# class Project_detail(models.Model):
-#     id = models.IntegerField()
-#     name = models.CharField(max_length=25)
-#     genre_id = models.ForeignKey(, on_delete=models.CASCADE, related_name="", null=True) #　募集ジャンルのデータベースにアクセス
-#     explain = models.CharField(max_length=255)
-#     leader_id = models.ForeignKey(, on_delete=models.CASCADE, related_name="", null=True) #　リーダーのid
+### Chat ########################################################
 
-# class Project_Chatroom(models.Model):
-#     id = models.IntegerField()
-#     project_id = models.IntegerField()
-#     name = models.CharField(max_length=15)
-
-# class Project_Genre(models.Model):
-#     project_id = models.ForeignKey(, on_delete=models.CASCADE, related_name="", null=True) #　募集ジャンルのデータベースにアクセス
-#     genre_id = models.ForeignKey(, on_delete=models.CASCADE, related_name="", null=True)
-
-# class User_genre(models.Model):
-#     user_id = models.ForeignKey(,)
-#     genre_id = models.ForeignKey(,)
-
-# class Genres(models.Model):
-#     genre_id = models.IntegerField()
-#     genre_name = models.CharField(max_length=10)
+class Chat(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
