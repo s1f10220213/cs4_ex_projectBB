@@ -34,3 +34,8 @@ class Project_genre(models.Model):
 class Chat(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+
+### Genre #######################################################
+
+# class Genre(models.Model):
+#     name = models.CharField(max_length=100)
