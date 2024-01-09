@@ -133,3 +133,9 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'mypage'
+LOGOUT_REDIRECT_URL = 'mypage'
+
+AUTH_USER_MODEL = "DevConnect.CustomUser"
