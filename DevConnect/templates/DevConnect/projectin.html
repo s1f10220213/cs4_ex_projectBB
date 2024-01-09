@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>プロジェクト部屋</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="channel col-3">
+                <p>チャンネル予定地 ＊確認用</p>
+            </div>
+            <div class="chat col-6">
+                <textarea id="project-log" class="form-control" rows="20"></textarea><br>
+                <input id="project-message-input" class="form-control" type="text" size="100"><br>
+                <input id="project-message-submit" type="button" value="送信">
+                {{ project_name|json_script:"project-name" }}
+            </div>
+            <div class="member col-3">
+                <p>メンバー予定地 ＊確認用</p>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand navbar-dark bg-info fixed-bottom">
+        <div class="row">
+            <p>メニューバー予定地 ＊確認用</p>
+            <div class="col-3">
+                <!-- <a href="{% url 'cp' %}"></a> -->
+            </div>
+            <div class="col-3">
+                <!-- <a href="{% url 'cp' %}"></a> -->
+            </div>
+            <div class="col-3">
+                <a href="{% url 'cp' %}">プロジェクト作成</a>
+            </div>
+            <div class="col-3">
+                <!-- <a href="{% url 'cp' %}"></a> -->
+            </div>   
+        </div>
+    </nav>
+    <script>
+        const projectName = JSON.parse(document.getElementById('project-name').textContent);
+
+        const chatSocket = new WebSocket(
+            'ws://' +
+            window.location.host +
+            '/ws/project/' +
+            projectName +
+            '/'
+        );
+
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#project-log').value += (data.message + '\n');
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#project-message-input').focus();
+        document.querySelector('#project-message-input').onkeyup = function (e) {
+            if (e.keyCode === 13) { // enter, return
+                document.querySelector('#project-message-submit').click();
+            }
+        };
+
+        document.querySelector('#project-message-submit').onclick = function (e) {
+            const messageInputDom = document.querySelector('#project-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>
