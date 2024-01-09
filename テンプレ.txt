@@ -13,16 +13,16 @@
         <div class="row">
             <p>メニューバー予定地 ＊確認用</p>
             <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
+                <!-- <a href="{% url 'cp' %}">マイページ</a> -->
             </div>
             <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
+                <!-- <a href="{% url 'cp' %}">検索</a> -->
             </div>
             <div class="col-3">
                 <a href="{% url 'cp' %}">プロジェクト作成</a>
             </div>
             <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
+                <!-- <a href="{% url 'cp' %}">設定</a> -->
             </div>   
         </div>
     </div>
