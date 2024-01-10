@@ -2,11 +2,15 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.utils import timezone
 from .forms import ProjectForm
-from DevConnect.models import Project, ProjectMembers, User_Genre, Chat, CustomUser
+from DevConnect.models import Project, ProjectMembers, User_Genre, Chat, CustomUser, ProjectGenre
 
 # マイページ
 def mypage(request):
-    
+    mem = ProjectMembers.objects.filter(user=request.user.id)
+    myProjects = []
+    for i in mem:
+        pro = Project.objects.filter(id=i.project)
+        myProjects.append(pro[0])
     context = {
         "myProjects" : myProjects
     }
@@ -74,8 +78,8 @@ def search_result(request, genres):
     for i in genre_parts:
         ids = ProjectGenre.objects.filter(genre=i)
         for j in ids:
-            pro = Project_detail.objects.filter(id=j)
-            if pro[0] in details:
+            pro = Project.objects.filter(id=j.project)
+            if pro[0] in projects:
                 continue
             else:
                 projects.append(pro[0])
