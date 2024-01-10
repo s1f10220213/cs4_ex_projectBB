@@ -4,34 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>project_detail</title>
-    <link href="{% static 'DevConnect/css/search.css' %}" rel="stylesheet">
+    <link href="{% static 'DevConnect/css/s_result.css' %}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container">
-        <form method="post" action="post">
-            <div class="form-group">
-                <p class="control-label"><b>募集ジャンル</b></p>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="progma" name="interests" id="interest_soccer">
-                    <label for="interest_soccer">プログラマー</label>
-                </div>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="design" name="interests" id="interest_basketball">
-                    <label for="interest_basketball">デザイナー</label>
-                </div>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="project" name="interests" id="interest_baseball">
-                    <label for="interest_baseball">制作・企画</label>
-                </div> 
-            </div>
-            
-            <div class="row">
-                <button type="submit">検索</button>
-            </div>
-        </form>
+        <h2>検索結果</h2>
     </div>
 
     <footer class="container-fluid mt-5 bg-dark">
