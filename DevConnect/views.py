@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
 from django.utils import timezone
-from DevConnect.models import CustomUser, User_Genre, Project, ProjectMembers, Chat
+from .forms import ProjectForm
+from DevConnect.models import CustomUser, Genre, User_Genre, Project, ProjectMembers, Chat
 
 # マイページ
 def mypage(request):
@@ -9,15 +10,17 @@ def mypage(request):
 
 # プロジェクト作成
 def cp(request):
-    return render(request, "DevConnect/create_project.html")
-
-# プロジェクト作成
-def cpdb(request):
     if request.method == 'POST':
-        project = Project(user=request.user)
-        project.save()
-            
-    return redirect(f"http://127.0.0.1:8000/word/cd_genre")
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = Project(name=form.cleaned_data['name'] ,description=form.cleaned_data['description'] ,leader=CustomUser.objects.get(pk=request.user.id))
+            project.save()
+            project.add_leader_to_members()
+            return redirect(projectin, project.name)
+    else:
+        form = ProjectForm()
+        context = {'form': form}
+        return render(request, "DevConnect/create_project.html", context)
 
 # プロジェクト指定
 def project(request):

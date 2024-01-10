@@ -31,6 +31,8 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(max_length=25, unique=True)
     user_name = models.CharField(max_length=25, unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
@@ -60,6 +62,7 @@ class Project(models.Model):
     description = models.TextField()
     leader = models.ForeignKey(CustomUser, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
     members = models.ManyToManyField(CustomUser, related_name='projects', through='ProjectMembers')
+    genre = models.ManyToManyField(Genre, related_name='projects', through='ProjectGenre')
 
     def add_leader_to_members(self):
         self.members.add(self.leader)
@@ -70,6 +73,10 @@ class ProjectMembers(models.Model):
 
     class Meta:
         unique_together = (('project', 'user'),)
+
+class ProjectGenre(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
 ### Chat ########################################################
 
