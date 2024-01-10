@@ -50,6 +50,14 @@ class Genre(models.Model):
     
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:  # pk (primary key) が None の場合、新しいオブジェクトが作成されていることを示します
+            # 初期化時に実行したい処理をここに書けます
+            # 例: name フィールドにデフォルト値をセットする
+            self.name = "デフォルトの名前"
+            
+        super().save(*args, **kwargs)  # 親クラスの `save()` メソッドを呼び出す
 
 class User_Genre(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

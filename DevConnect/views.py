@@ -3,7 +3,7 @@ from django.http import Http404
 from django.utils import timezone
 from .forms import ProjectForm
 from django.contrib.auth.decorators import login_required
-from DevConnect.models import Project, ProjectMembers, User_Genre, Chat, CustomUser, ProjectGenre
+from DevConnect.models import Project, ProjectMembers, User_Genre, Chat, CustomUser, ProjectGenre, Genre
 
 # マイページ
 def mypage(request):
@@ -26,6 +26,25 @@ def cp(request):
             project = Project(name=form.cleaned_data['name'] ,description=form.cleaned_data['description'] ,leader=CustomUser.objects.get(pk=request.user.id))
             project.save()
             project.add_leader_to_members()
+            
+            if 'private' in request.POST:
+                proGenre = ProjectGenre(project=project, genre=Genre.objects.get(genre="private"))
+                proGenre.save()
+            else:
+                if 'programmer' in request.POST:
+                    proGenre = ProjectGenre(project=project, genre=Genre.objects.get(genre="programmer"))
+                    proGenre.save()
+                if 'designer' in request.POST:
+                    proGenre = ProjectGenre(project=project, genre=Genre.objects.get(genre="designer"))
+                    proGenre.save()
+                if 'production' in request.POST:
+                    proGenre = ProjectGenre(project=project, genre=Genre.objects.get(genre="production"))
+                    proGenre.save()
+                if 'sound' in request.POST:
+                    proGenre = ProjectGenre(project=project, genre=Genre.objects.get(genre="sound"))
+                    proGenre.save()
+            
+
             return redirect(projectin, project.name)
     else:
         form = ProjectForm()
