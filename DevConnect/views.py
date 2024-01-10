@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
-from DevConnect.models import CustomUser, User_Genre, Project, ProjectMembers, Project_detail, Project_recruit_genre, Project_member_genre, Chat
+from DevConnect.models import CustomUser, User_Genre, Project, ProjectMembers, Chat
 
 # マイページ
 def mypage(request):
