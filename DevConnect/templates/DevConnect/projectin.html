@@ -16,9 +16,16 @@
                 <p>チャンネル予定地 ＊確認用</p>
             </div>
             <div class="chat col-6">
-                <textarea id="project-log" class="form-control" rows="20"></textarea><br>
-                <input id="project-message-input" class="form-control" type="text" size="100"><br>
-                <input id="project-message-submit" type="button" value="送信">
+                {% for c in chat %}
+                <p>{{c.user}}</p>
+                <p>{{c.content}}</p>
+                <p>{{c.timestamp}}</p>
+                {% endfor %}
+                <form class="" action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input id="project-message-input" class="form-control" name="content" type="text" size="100"><br>
+                    <button type="submit" name="submit" id="project-message-submit">送信</button>
+                </form>
                 {{ project_name|json_script:"project-name" }}
             </div>
             <div class="member col-3">
@@ -28,26 +35,26 @@
     </div>
     <footer class="container-fluid mt-5 bg-dark">
         <ul class="nav justify-content-around">
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">マイページ</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">検索</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">プロジェクト作成</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">設定</a>
-                  </div>
-              </li>	 
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">マイページ</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">検索</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">プロジェクト作成</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">設定</a>
+                </div>
+            </li>
         </ul>
     </footer>
     <script>
@@ -62,19 +69,16 @@
         );
 
         chatSocket.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            document.querySelector('#project-log').value += (data.message + '\n');
+            // location.reload()
+            console.log("Hello")
         };
+
+        //     const data = JSON.parse(e.data);
+        //     document.querySelector('#project-log').value += (data.message + '\n');
+        // };
 
         chatSocket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
-        };
-
-        document.querySelector('#project-message-input').focus();
-        document.querySelector('#project-message-input').onkeyup = function (e) {
-            if (e.keyCode === 13) { // enter, return
-                document.querySelector('#project-message-submit').click();
-            }
         };
 
         document.querySelector('#project-message-submit').onclick = function (e) {
@@ -83,7 +87,6 @@
             chatSocket.send(JSON.stringify({
                 'message': message
             }));
-            messageInputDom.value = '';
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"

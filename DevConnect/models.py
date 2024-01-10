@@ -58,7 +58,7 @@ class User_Genre(models.Model):
 ### Project #####################################################
     
 class Project(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     leader = models.ForeignKey(CustomUser, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
     members = models.ManyToManyField(CustomUser, related_name='projects', through='ProjectMembers')
@@ -66,6 +66,9 @@ class Project(models.Model):
 
     def add_leader_to_members(self):
         self.members.add(self.leader)
+
+    def __str__(self):
+        return self.name
 
 class ProjectMembers(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

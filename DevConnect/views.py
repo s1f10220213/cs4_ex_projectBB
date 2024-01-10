@@ -21,8 +21,8 @@ def cp(request):
             return redirect(projectin, project.name)
     else:
         form = ProjectForm()
-        context = {'form': form}
-        return render(request, "DevConnect/create_project.html", context)
+    context = {'form': form}
+    return render(request, "DevConnect/create_project.html", context)
 
 # プロジェクト指定
 def project(request):
@@ -30,7 +30,27 @@ def project(request):
 
 # プロジェクトページ
 def projectin(request, project_name):
-    return render(request, "DevConnect/projectin.html", {"project_name": project_name})
+    if request.method == 'POST':
+        project = Project.objects.get(name=project_name)
+        chat = Chat(project=project, user=CustomUser.objects.get(pk=request.user.id), content=request.POST["content"])
+        chat.save()
+        return redirect(projectin, project.name)
+    else:
+        project_id = Project.objects.get(name=project_name).id
+
+        context = {
+            "chat" : Chat.objects.filter(project=project_id),
+            "project_name": project_name
+        }
+        return render(request, "DevConnect/projectin.html", context)
+
+# チャット
+def chat(request, project_name):
+    if request.method == 'POST':
+        project = Project.objects.get(name=f"{project_name}")
+        chat = Chat(project=project.id, user=request.user.id, content=request.POST["content"])
+        chat.save()
+    return redirect(projectin, project_name)
 
 # プロジェクト詳細
 def projectDetail(request, id):
