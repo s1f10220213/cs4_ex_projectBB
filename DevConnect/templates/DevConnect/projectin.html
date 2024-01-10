@@ -26,23 +26,30 @@
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand navbar-dark bg-info fixed-bottom">
-        <div class="row">
-            <p>メニューバー予定地 ＊確認用</p>
-            <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
-            </div>
-            <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
-            </div>
-            <div class="col-3">
-                <a href="{% url 'cp' %}">プロジェクト作成</a>
-            </div>
-            <div class="col-3">
-                <!-- <a href="{% url 'cp' %}"></a> -->
-            </div>   
-        </div>
-    </nav>
+    <footer class="container-fluid mt-5 bg-dark">
+        <ul class="nav justify-content-around">
+              <li class="nav-item">
+                  <div class="my-nav">
+                      <a class="nav-link link-light" href="#">マイページ</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                  <div class="my-nav">
+                      <a class="nav-link link-light" href="#">検索</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                  <div class="my-nav">
+                      <a class="nav-link link-light" href="#">プロジェクト作成</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                  <div class="my-nav">
+                      <a class="nav-link link-light" href="#">設定</a>
+                  </div>
+              </li>	 
+        </ul>
+    </footer>
     <script>
         const projectName = JSON.parse(document.getElementById('project-name').textContent);
 
