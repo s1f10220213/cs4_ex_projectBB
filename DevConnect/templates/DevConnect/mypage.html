@@ -20,6 +20,16 @@
             <button type="submit">ログアウト</button>
         </form>
 
+        {% if myprojects %}
+        {% for project in myprojects %}
+            <div class="pros">
+                <h2><a href="{% url 'projectDetail' project.name %}">{{  project.name }}</a></h2>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p>所属してるプロジェクトがまだありません</p>
+        {% endif %}
+
 
         {% else %}
         <!-- ログアウト中の表示 -->
