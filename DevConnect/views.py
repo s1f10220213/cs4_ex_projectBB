@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import Http404
 from django.utils import timezone
 from .forms import ProjectForm
-from DevConnect.models import CustomUser, Genre, User_Genre, Project, ProjectMembers, Chat
+from DevConnect.models import Project, Project_detail, Project_member_genre, Project_recruit_genre, ProjectMembers, User_Genre, Chat, UserManager, CustomUser
 
 # マイページ
 def mypage(request):
@@ -31,9 +31,29 @@ def projectin(request, project_name):
     return render(request, "DevConnect/projectin.html", {"project_name": project_name})
 
 # プロジェクト詳細
-def projectDetail(request, project_name):
-    return render(request, "DevConnect/project_detail.html", {"project_name": project_name})
+def projectDetail(request, id):
+    try:
+        detail = Project_detail.objects.get(pk=id)
+        members = ProjectMembers.objects.get(project=detail.project)
+        genres = Project_recruit_genre.objects.get(project=detail.project)
+
+    except detail.DoesNotExist:
+        raise Http404("Your page does not exist")
+    context = {
+        "detail": detail,
+        "members": members,
+        "genres": genres
+    }
+    return render(request, "DevConnect/project_detail.html", context)
 
 # プロジェクト検索ページ
 def search(request):
-    return render(request, "DevConnect/search.html")
+    if request.method == "POST":
+        newProject = Project_detail(title=request.POST["title"], body=request.POST["body"], user_name=request.POST["username"], user_pass=request.POST["userpass"])
+
+        newProject.save()
+        context = {
+            "mypage": mypage
+        }
+        return render(request, "hobitalk/detail.html", context)
+    return render(request, "DevConnect/search.html", context)

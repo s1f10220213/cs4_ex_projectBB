@@ -70,7 +70,6 @@ class Project(models.Model):
 class ProjectMembers(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-
     class Meta:
         unique_together = (('project', 'user'),)
 
