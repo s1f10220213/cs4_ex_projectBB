@@ -3,12 +3,14 @@ from django.http import Http404
 from django.utils import timezone
 from .forms import ProjectForm
 from DevConnect.models import CustomUser, Genre, User_Genre, Project, ProjectMembers, Chat
+from django.contrib.auth.decorators import login_required
 
 # マイページ
 def mypage(request):
     return render(request, "DevConnect/mypage.html")
 
 # プロジェクト作成
+@login_required
 def cp(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
