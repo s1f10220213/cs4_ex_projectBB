@@ -10,4 +10,5 @@ urlpatterns = [
     path('chat/<str:project_name>', views.chat, name='chat'), # チャット内容保存
     path('projectDetail/<str:project_name>', views.projectDetail, name='projectDetail'), # プロジェクト詳細
     path('search', views.search, name='search'), # プロジェクト検索
+    path('s_result/<str:genres>', views.search_result, name='s_result'), # 検索結果
 ]

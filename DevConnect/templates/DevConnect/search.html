@@ -11,20 +11,25 @@
 
 <body>
     <div class="container">
-        <form method="post" action="post">
+        <form method="post" action="{% url 'search' %}">
+            {% csrf_token %}
             <div class="form-group">
                 <p class="control-label"><b>募集ジャンル</b></p>
                 <div class="checkbox-inline">
-                    <input type="checkbox" value="progma" name="interests" id="interest_soccer">
+                    <input type="checkbox" value="programmer" name="programmer" id="programmer">
                     <label for="interest_soccer">プログラマー</label>
                 </div>
                 <div class="checkbox-inline">
-                    <input type="checkbox" value="design" name="interests" id="interest_basketball">
+                    <input type="checkbox" value="designer" name="designer" id="designer">
                     <label for="interest_basketball">デザイナー</label>
                 </div>
                 <div class="checkbox-inline">
-                    <input type="checkbox" value="project" name="interests" id="interest_baseball">
+                    <input type="checkbox" value="production" name="production" id="production">
                     <label for="interest_baseball">制作・企画</label>
+                </div> 
+                <div class="checkbox-inline">
+                    <input type="checkbox" value="sound" name="sound" id="sound">
+                    <label for="interest_baseball">サウンド</label>
                 </div> 
             </div>
             
