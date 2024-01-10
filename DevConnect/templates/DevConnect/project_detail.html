@@ -12,20 +12,32 @@
 <body>
     <div class="container">
         <div class="row">
-            <p>プロジェクトのタイトル</p>
+            <p class="title">{{ detail.name }}</p>
         </div>
 
         <div class="row">
             <div class="col-9">
                 <div class="genre row">
-                    <p>募集ジャンル ＊確認用</p>
+                    {% if genres %}
+                    {% for genre in genres %}
+                        <p class="genre">{{  genre.genre }}</p>
+                    {% endfor %}
+                    {% endif %}
                 </div>
                 <div class="explain row">
-                    <p>プロジェクト概要 ＊確認用</p>
+                    <p>{{ detail.explain }}</p>
                 </div>
             </div>
             <div class="member col-3">
-                <p>メンバー予定地 ＊確認用</p>
+                {% if members %}
+                {% for member in members %}
+                <div class="">
+                    <p>{{  member.name }}</p>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p>メンバーがいません、、、</p>
+                {% endif %}
             </div>
         </div>
     </div>

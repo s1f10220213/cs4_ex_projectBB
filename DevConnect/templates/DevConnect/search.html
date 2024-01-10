@@ -11,7 +11,7 @@
 
 <body>
     <div class="container">
-        <form method="post" action="hoge">
+        <form method="post" action="post">
             <div class="form-group">
                 <p class="control-label"><b>募集ジャンル</b></p>
                 <div class="checkbox-inline">
@@ -26,12 +26,12 @@
                     <input type="checkbox" value="project" name="interests" id="interest_baseball">
                     <label for="interest_baseball">制作・企画</label>
                 </div> 
-            </div>     
+            </div>
+            
+            <div class="row">
+                <button type="submit">検索</button>
+            </div>
         </form>
-
-        <div class="row">
-            <input id="project-search" type="button" value="送信">
-        </div>
     </div>
 
     <footer class="container-fluid mt-5 bg-dark">

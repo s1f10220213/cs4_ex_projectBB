@@ -53,6 +53,7 @@ class Project(models.Model):
 class ProjectMembers(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    name = models.CharField(max_length=15)
 
 class Project_detail(models.Model):
     project = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
