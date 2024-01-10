@@ -34,8 +34,8 @@ def projectin(request, project_name):
 def projectDetail(request, project_name):
     try:
         detail = Project.objects.get(name=project_name)
-        members = ProjectMembers.objects.get(project=detail.id)
-        genres = Project.objects.get(project=detail.id)
+        members = ProjectMembers.objects.get(project=detail[0].id)
+        genres = Project.objects.get(project=detail[0].id)
 
     except detail.DoesNotExist:
         raise Http404("Your page does not exist")
