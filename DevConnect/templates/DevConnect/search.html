@@ -12,6 +12,7 @@
 <body>
     <div class="container">
         <form method="post" action="post">
+            {% csrf_token %}
             <div class="form-group">
                 <p class="control-label"><b>募集ジャンル</b></p>
                 <div class="checkbox-inline">
