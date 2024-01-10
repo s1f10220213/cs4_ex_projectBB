@@ -11,7 +11,7 @@
 
 <body>
     <div class="container">
-        <form method="post" action="post">
+        <form method="post" action="{% url 'search' %}">
             {% csrf_token %}
             <div class="form-group">
                 <p class="control-label"><b>募集ジャンル</b></p>

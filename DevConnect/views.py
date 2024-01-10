@@ -6,7 +6,11 @@ from DevConnect.models import Project, ProjectMembers, User_Genre, Chat, CustomU
 
 # マイページ
 def mypage(request):
-    return render(request, "DevConnect/mypage.html")
+    
+    context = {
+        "myProjects" : myProjects
+    }
+    return render(request, "DevConnect/mypage.html", context)
 
 # プロジェクト作成
 def cp(request):
@@ -60,7 +64,7 @@ def search(request):
         if 'sound' in request.POST:
             gen += "sound"
         
-        return redirect("DevConnect/search_result.html", genres=gen)
+        return redirect("s_result", genres=gen)
     return render(request, "DevConnect/search.html")
 
 # 検索結果ページ
