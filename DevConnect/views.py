@@ -36,10 +36,12 @@ def projectin(request, project_name):
         chat.save()
         return redirect(projectin, project.name)
     else:
-        project_id = Project.objects.get(name=project_name).id
-
+        project = Project.objects.get(name=project_name)
+        menbers = project.members.all()
         context = {
-            "chat" : Chat.objects.filter(project=project_id),
+            "project":Project.objects.filter(members=CustomUser.objects.get(pk=request.user.id)),
+            "chat" : Chat.objects.filter(project=project.id),
+            "member":menbers,
             "project_name": project_name
         }
         return render(request, "DevConnect/projectin.html", context)
