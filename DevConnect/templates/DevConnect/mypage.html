@@ -21,8 +21,8 @@
             <button type="submit">ログアウト</button>
         </form>
 
-        {% if myprojects %}
-        {% for project in myprojects %}
+        {% if myProjects %}
+        {% for project in myProjects %}
             <div class="pros">
                 <h2><a href="{% url 'projectDetail' project.name %}">{{  project.name }}</a></h2>
             </div>
