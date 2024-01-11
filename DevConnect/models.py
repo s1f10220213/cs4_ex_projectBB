@@ -1,7 +1,8 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
-class UserManager(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, user_name, password=None):
         if not user_id:
             raise ValueError('ユーザーIDが必要です')
@@ -30,10 +31,10 @@ class UserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_id = models.CharField(max_length=25, unique=True)
     user_name = models.CharField(max_length=25, unique=True)
-    is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
 
-    objects = UserManager()
+    objects = CustomUserManager()
 
     USERNAME_FIELD = 'user_id'
     REQUIRED_FIELDS = ['user_name']
@@ -41,40 +42,48 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.user_name
 
+
+### Genre #######################################################
+
+class Genre(models.Model):
+    genre = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+
 class User_Genre(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    genre = models.CharField(max_length=100)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
 ### Project #####################################################
     
 class Project(models.Model):
-    user = models.ManyToManyField(CustomUser, through='ProjectMembers')
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField()
+    leader = models.ForeignKey(CustomUser, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
+    members = models.ManyToManyField(CustomUser, related_name='projects', through='ProjectMembers')
+    genre = models.ManyToManyField(Genre, related_name='projects', through='ProjectGenre')
+
+    def add_leader_to_members(self):
+        self.members.add(self.leader)
+
+    def __str__(self):
+        return self.name
 
 class ProjectMembers(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = (('project', 'user'),)
 
-class Project_detail(models.Model):
-    project = models.OneToOneField(Project, on_delete=models.CASCADE, primary_key=True)
-    name = models.CharField(max_length=100)
-    explain = models.TextField()
-    leader = models.ForeignKey(CustomUser, related_name='project_leadership', on_delete=models.SET_NULL, null=True)
-
-class Project_recruit_genre(models.Model):
+class ProjectGenre(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    genre = models.CharField(max_length=100)
-
-class Project_member_genre(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    genre = models.CharField(max_length=100)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
 ### Chat ########################################################
 
 class Chat(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-
-### Genre #######################################################
-
-# class Genre(models.Model):
-#     name = models.CharField(max_length=100)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)

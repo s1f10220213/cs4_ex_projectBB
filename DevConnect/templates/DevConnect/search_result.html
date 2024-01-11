@@ -11,33 +11,18 @@
 
 <body>
     <div class="container">
-        <form method="post" action="{% url 'search' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <p class="control-label"><b>募集ジャンル</b></p>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="programmer" name="programmer" id="programmer">
-                    <label for="interest_soccer">プログラマー</label>
-                </div>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="designer" name="designer" id="designer">
-                    <label for="interest_basketball">デザイナー</label>
-                </div>
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="production" name="production" id="production">
-                    <label for="interest_baseball">制作・企画</label>
-                </div> 
-                <div class="checkbox-inline">
-                    <input type="checkbox" value="sound" name="sound" id="sound">
-                    <label for="interest_baseball">サウンド</label>
-                </div>
-            </div>
-            
-            <div class="row">
-                <button type="submit">検索</button>
-            </div>
-        </form>
+        <h2>検索結果</h2>
     </div>
+
+    {% if projects %}
+    {% for project in projects %}
+        <div class="pros">
+            <a href="{% url 'projectDetail' project.name %}">{{ project.name }}</a>
+        </div>
+    {% endfor %}
+    {% else %}
+    <p>一致するプロジェクトはありませんでした</p>
+    {% endif %}
 
     <footer class="container-fluid mt-5 bg-dark">
         <ul class="nav justify-content-around">
