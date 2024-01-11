@@ -83,13 +83,12 @@ def chat(request, project_name):
 
 # プロジェクト詳細
 def projectDetail(request, project_name):
-    detail = Project.objects.filter(name=project_name)
-    members = ProjectMembers.objects.filter(project__id=detail[0].id)
-    genres = Genre.objects.filter(project__id=detail[0].id)
-
+    project = Project.objects.get(name=project_name)
+    menbers = project.members.all()
+    genres = project.genre.all()
     context = {
-        "detail": detail,
-        "members": members,
+        "detail":project,
+        "members": menbers,
         "genres": genres
     }
     return render(request, "DevConnect/project_detail.html", context)

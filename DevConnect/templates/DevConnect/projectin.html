@@ -21,9 +21,11 @@
             </div>
             <div class="chat col-6">
                 {% for c in chat %}
-                <p>{{c.user}}</p>
-                <p>{{c.content}}</p>
-                <p><small>{{c.timestamp}}</small></p>
+                <div class="chat">
+                    <p class="user">{{c.user}}</p>
+                    <p class="content">{{c.content}}</p>
+                    <p class="timestamp"><small>{{c.timestamp}}</small></p>
+                </div>
                 {% endfor %}
                 <form class="" action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
