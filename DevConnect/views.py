@@ -83,13 +83,10 @@ def chat(request, project_name):
 
 # プロジェクト詳細
 def projectDetail(request, project_name):
-    try:
-        detail = Project.objects.get(name=project_name)
-        members = ProjectMembers.objects.get(project=detail[0].id)
-        genres = Project.objects.get(project=detail[0].id)
+    detail = Project.objects.filter(name=project_name)
+    members = ProjectMembers.objects.filter(project__id=detail[0].id)
+    genres = Genre.objects.filter(project__id=detail[0].id)
 
-    except detail.DoesNotExist:
-        raise Http404("Your page does not exist")
     context = {
         "detail": detail,
         "members": members,
