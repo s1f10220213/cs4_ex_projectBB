@@ -5,3 +5,7 @@ footer {
     height: 60px;
     background-color: #312d2a;
 }
+
+li{
+    margin-left: 20%;
+}
