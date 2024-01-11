@@ -10,7 +10,7 @@ def mypage(request):
     mem = ProjectMembers.objects.filter(user=request.user.id)
     myProjects = []
     for i in mem:
-        pro = Project.objects.filter(id=i.project)
+        pro = Project.objects.filter(id=i.project.id)
         myProjects.append(pro[0])
     context = {
         "myProjects" : myProjects
