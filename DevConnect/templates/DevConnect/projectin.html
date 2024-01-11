@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 {% load static %}
+
 <head>
     <meta charset="utf-8" />
     <title>プロジェクト部屋</title>
@@ -15,7 +16,7 @@
         <div class="row">
             <div class="channel col-3">
                 {% for p in project %}
-                <p>{{p.name}}</p>
+                <a href="{% url 'projectin' p.name %}">{{p.name}}</a><br>
                 {% endfor %}
             </div>
             <div class="chat col-6">
@@ -40,26 +41,26 @@
     </div>
     <footer class="container-fluid mt-5 bg-dark">
         <ul class="nav justify-content-around">
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'mypage' %}">マイページ</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'search' %}">検索</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'cp' %}">プロジェクト作成</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">設定</a>
-                  </div>
-              </li>	 
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'mypage' %}">マイページ</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'search' %}">検索</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'cp' %}">プロジェクト作成</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">設定</a>
+                </div>
+            </li>
         </ul>
     </footer>
     <script>
