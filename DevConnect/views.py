@@ -117,7 +117,7 @@ def search_result(request, genres):
     projects = []
     genre_parts = genres.split('_')
     for i in genre_parts:
-        ids = ProjectGenre.objects.filter(genre=i)
+        ids = ProjectGenre.objects.filter(genre__genre=i)
         for j in ids:
             pro = Project.objects.filter(id=j.project)
             if pro[0] in projects:
