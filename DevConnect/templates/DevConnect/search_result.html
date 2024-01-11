@@ -16,11 +16,13 @@
     </div>
 
     {% if projects %}
+    <ul class="list-group">
     {% for project in projects %}
-    <div class="pros">
+    <li class="list-group-item">
         <a href="{% url 'projectin' project.name %}">{{ project.name }}</a>
-    </div>
+    </li>
     {% endfor %}
+    </ul>
     {% else %}
     <p>一致するプロジェクトはありませんでした</p>
     {% endif %}
