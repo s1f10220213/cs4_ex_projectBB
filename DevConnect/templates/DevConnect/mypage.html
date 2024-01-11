@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 {% load static %}
+
 <head>
     <meta charset="utf-8" />
     <title>project_detail</title>
@@ -23,9 +24,9 @@
 
         {% if myProjects %}
         {% for project in myProjects %}
-            <div class="pros">
-                <h2><a href="{% url 'projectDetail' project.name %}">{{  project.name }}</a></h2>
-            </div>
+        <div class="pros">
+            <h2><a href="{% url 'projectin' project.name %}">{{ project.name }}</a></h2>
+        </div>
         {% endfor %}
         {% else %}
         <p>所属してるプロジェクトがまだありません</p>
@@ -47,26 +48,26 @@
 
     <footer class="container-fluid mt-5 bg-dark">
         <ul class="nav justify-content-around">
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'mypage' %}">マイページ</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'search' %}">検索</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="{% url 'cp' %}">プロジェクト作成</a>
-                  </div>
-              </li>
-              <li class="nav-item">
-                  <div class="my-nav">
-                      <a class="nav-link link-light" href="#">設定</a>
-                  </div>
-              </li>	 
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'mypage' %}">マイページ</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'search' %}">検索</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="{% url 'cp' %}">プロジェクト作成</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="my-nav">
+                    <a class="nav-link link-light" href="#">設定</a>
+                </div>
+            </li>
         </ul>
     </footer>
 
